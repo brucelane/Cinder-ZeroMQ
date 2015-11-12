@@ -56,7 +56,7 @@ void ZeroMQServerApp::draw()
 
 void ZeroMQServerApp::cleanup()
 {
-
+	zmq_ctx_destroy(context);
 }
 
 CINDER_APP(ZeroMQServerApp, RendererGl)
