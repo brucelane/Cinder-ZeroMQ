@@ -11,12 +11,13 @@ class ZeroMQClientApp : public App {
 
 public:
 
-    void setup();
-    void draw();
-    void update();
-    void mouseDown(MouseEvent event);
+	void setup() override;
+	void cleanup() override;
+	void draw() override;
+	void update() override;
+	void mouseDown(MouseEvent event) override;
 
-    void *context;
+	void *context;
 	void *requester;
 
 };
@@ -30,26 +31,26 @@ void ZeroMQClientApp::setup()
 
 void ZeroMQClientApp::update()
 {
-   
+
 }
 
 void ZeroMQClientApp::mouseDown(MouseEvent event)
 {
-	int request_nbr;
-	for (request_nbr = 0; request_nbr != 10; request_nbr++) {
-		char buffer[10];
-		printf("Sending Hello %d…\n", request_nbr);
-		zmq_send(requester, "Hello", 5, 0);
-		zmq_recv(requester, buffer, 10, 0);
-		printf("Received World %d\n", request_nbr);
-	}
-	zmq_close(requester);
-	zmq_ctx_destroy(context);
+	char buffer[10];
+
+	zmq_send(requester, "Hello", 5, 0);
+	zmq_recv(requester, buffer, 10, 0);
 }
 
 void ZeroMQClientApp::draw()
 {
 
+}
+
+void ZeroMQClientApp::cleanup()
+{
+	zmq_close(requester);
+	zmq_ctx_destroy(context);
 }
 
 
